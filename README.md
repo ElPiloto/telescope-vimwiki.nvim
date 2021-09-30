@@ -15,3 +15,8 @@ Look for your vimwiki pages using telescope!
 ### Usage
 
 ```:Telescope vimwiki```
+
+
+#### TODO
+
+- [ ] Add way of configuring which vimwiki you want, currently just defaults to 0-th wiki.
