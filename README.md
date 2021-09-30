@@ -4,12 +4,13 @@ Look for your vimwiki pages using telescope!
 
 ### Requirements:
 
-- neovim (>= 0.5.0)
-- vimwiki
+- [neovim](https://github.com/neovim/neovim) (>= 0.5.0)
+- [vimwiki](https://github.com/vimwiki/vimwiki)
+- [nvim-telescope](https://github.com/nvim-telescope/telescope.nvim)
 
 ### Installation
 
-```require'telescope'.load_extension'vimwiki'```
+```require('telescope').load_extension('vimwiki')```
 
 
 ### Usage
