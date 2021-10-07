@@ -50,6 +50,10 @@ Also supports specifying a different vimwiki:
 
 ```:Telescope vw live_grep i=1```
 
+#### Insert link in current cursor position:
+
+:Telescope vw link
+
 
 #### Keybindings
 
