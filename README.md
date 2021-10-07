@@ -52,7 +52,7 @@ Also supports specifying a different vimwiki:
 
 #### Insert link in current cursor position:
 
-:Telescope vw link
+```:Telescope vw link```
 
 
 #### Keybindings
