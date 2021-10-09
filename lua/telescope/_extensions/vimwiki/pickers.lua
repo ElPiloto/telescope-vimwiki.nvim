@@ -48,6 +48,7 @@ M.vimwiki_link = function(opts)
 	file_ext = "%" .. file_ext
   end
 
+  --TODO: Figure out proper way to override picker actions, see https://github.com/nvim-telescope/telescope.nvim/blob/master/developers.md#replacing-actions
   -- I couldn't find a way to override the default action of live_grep, so I copied its implementation from telescope source code and tweaked it a little to remove unwanted stuff
   local vimgrep_arguments = opts.vimgrep_arguments or conf.vimgrep_arguments
   opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or vim.loop.cwd()
