@@ -76,20 +76,26 @@ M.vimwiki_link = function(opts)
     finder = live_grepper,
     previewer = conf.grep_previewer(opts),
     sorter = sorters.highlighter_only(opts),
-    attach_mappings = function(prompt_bufnr, map)
+    attach_mappings = function(prompt_bufnr, _)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
         local selection = action_state.get_selected_entry()
-		-- We only want the relative path. Using the absolute path works but it looks ugly
-		local relative_path = string.gsub(selection[1], vimwiki_path, "")
-		-- The selection is of the form file_path:line_number:column_number:selected_line_text
-		-- We want to get the file_path only. The below pattern might catch false negatives if the file_path contains matching patterns but that will be very odd
-		relative_path = string.gsub(relative_path, ":%d+:%d+:.+$", "")
-		-- Finally, we remove the file extension. This is also not necessary, but it's the convention
-		relative_path = string.gsub(relative_path, file_ext.."$", "")
-		local link = "["..relative_path.."]".."("..relative_path..")"
-        vim.api.nvim_put({link}, "", true, true)
-      end)
+        -- The selection is of the form file_path:line_number:column_number:selected_line_text
+        -- We want to get the file_path only. The below pattern might catch false negatives if the file_path contains matching patterns but that will be very odd
+        local abs_path = string.gsub(selection[1], ":%d+:%d+:.+$", "")
+        --Get path relative to file which opened Telescope (which should have been reverted
+        --to after closing telescope picker.)
+        local bufnr = vim.api.nvim_get_current_buf()
+        local current_fname =  vim.api.nvim_buf_get_name(bufnr)
+        local current_dir = vim.fn.fnamemodify(current_fname, ":p:h")
+        local relative_path = vim.api.nvim_eval(
+          "vimwiki#path#relpath('" .. current_dir .. "', '" .. abs_path .. "')"
+        )
+        -- Finally, we remove the file extension. This is also not necessary, but it's the convention
+        relative_path = string.gsub(relative_path, file_ext.."$", "")
+        local link = "["..relative_path.."]".."("..relative_path..")"
+          vim.api.nvim_put({link}, "", true, true)
+        end)
       return true
     end,
   }):find()
